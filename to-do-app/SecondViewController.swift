@@ -16,7 +16,23 @@ class SecondViewController: UIViewController, UITextFieldDelegate {
         
         self.view.endEditing(true)
         
-        print(itemInputField.text)
+        let itemsObject = UserDefaults.standard.object(forKey: "items")
+        
+        var items:[String]
+        
+        if let tempItems = itemsObject as? [String] {
+            // add content to an existing array
+            items = tempItems
+            
+            items.append(itemInputField.text!)
+        } else {
+            // create a new array
+            items = [itemInputField.text!]
+        }
+        
+        // save the new or updated array
+        UserDefaults.standard.setValue(items, forKey: "items")
+        
         itemInputField.text = String()
     }
     
